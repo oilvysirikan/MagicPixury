@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pixury Character Template",
+  "type": "object",
+  "required": [
+    "name",
+    "slug",
+    "category",
+    "prompt"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "prompt": {
+      "type": "string"
+    },
+    "negative_prompt": {
+      "type": "string"
+    },
+    "image_model": {
+      "type": "string"
+    },
+    "voice": {
+      "type": "object"
+    },
+    "video": {
+      "type": "object"
+    }
+  }
+}

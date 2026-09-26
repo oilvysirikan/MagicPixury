@@ -1,0 +1,14 @@
+{
+  "job_type": "ai_influencer",
+  "input": {
+    "character_prompt": "string",
+    "reference_image_url": "string|null",
+    "voice_text": "string|null"
+  },
+  "output": {
+    "image_url": "string|null",
+    "audio_url": "string|null",
+    "video_url": "string|null"
+  },
+  "status": "queued|running|completed|failed"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "pixury-ai-influencer-engine",
+  "version": "0.1.0",
+  "stages": [
+    {
+      "id": "prompt",
+      "provider": "openai",
+      "purpose": "generate structured visual prompt"
+    },
+    {
+      "id": "image",
+      "provider": "stable-diffusion-compatible",
+      "purpose": "generate character/product image"
+    },
+    {
+      "id": "voice",
+      "provider": "gtts-compatible",
+      "purpose": "generate voice track"
+    },
+    {
+      "id": "talking-video",
+      "provider": "sadtalker",
+      "purpose": "generate talking-head video"
+    },
+    {
+      "id": "face-enhancement",
+      "provider": "gfpgan",
+      "purpose": "optional face enhancement"
+    }
+  ],
+  "storage": {
+    "provider": "cloudflare-r2"
+  },
+  "orchestration": {
+    "recommended": "queue/job worker"
+  }
+}

@@ -1,0 +1,35 @@
+.git
+.github
+
+.env
+.env.*
+!.env.example
+
+node_modules
+vendor
+
+# User uploads never live in the image (R2 is the persistent store)
+public/uploads/*
+
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/app/r2-cache/*
+
+# NOTE: bootstrap/cache/packages.php + services.php are committed in this
+# repo and required for provider discovery — do NOT ignore them.
+bootstrap/cache/config.php
+bootstrap/cache/routes-v7.php
+bootstrap/cache/events.php
+
+public/hot
+
+.DS_Store
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+Dockerfile*
+docker-compose*

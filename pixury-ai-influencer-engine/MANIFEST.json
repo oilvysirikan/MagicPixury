@@ -1,0 +1,7 @@
+{
+  "source_zip": "AI-Influencer-Generator-main.zip",
+  "source_notebook": "AI_Influencer.ipynb",
+  "extracted_code_cells": 8,
+  "purpose": "Isolated AI influencer pipeline reference for Pixury/MagicAI integration",
+  "license": "MIT (original license retained when present)"
+}
