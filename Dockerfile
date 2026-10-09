@@ -36,7 +36,17 @@ ENV APP_ENV=production \
 # Alpine packages: nginx, supervisor, runtime tools (ffmpeg for extension/voice
 # pipelines, poppler-utils for spatie/pdf-to-text).
 # $PHPIZE_DEPS + icu-dev are build-only dependencies (removed at the end).
+#
+# ca-certificates is an EXPLICIT runtime requirement, not a transitive one.
+# It provides the CA bundle that MYSQL_ATTR_SSL_CA points at:
+#     /etc/ssl/certs/ca-certificates.crt
+# config/database.php:61-63 passes it as PDO::MYSQL_ATTR_SSL_CA and wraps it
+# in array_filter(), so an unset variable silently yields a plaintext
+# connection — which PlanetScale rejects. Do not let `curl` be the reason
+# this package is present; a curl upgrade or removal must not take the CA
+# bundle with it.
 RUN apk add --no-cache \
+        ca-certificates \
         nginx \
         supervisor \
         curl \
@@ -75,6 +85,18 @@ RUN apk add --no-cache \
     && docker-php-ext-enable redis \
     && apk del $PHPIZE_DEPS \
     && apk add --no-cache icu libpq postgresql17-client oniguruma libzip libpng libjpeg-turbo libwebp freetype libxml2
+
+# Build-time gate for the PlanetScale TLS prerequisite. This turns a
+# production-only runtime failure into a local build failure.
+#
+#   test -s  -> the file must exist AND be non-empty (not a 0-byte stub)
+#
+# /var/www/deploy/container.env.example:139 sets MYSQL_ATTR_SSL_CA to the
+# path asserted below. If this assertion is ever deleted or the path moves,
+# update that file in the same commit.
+RUN test -s /etc/ssl/certs/ca-certificates.crt \
+    && echo "OK: CA bundle present at /etc/ssl/certs/ca-certificates.crt" \
+    || (echo "FATAL: CA bundle missing — PlanetScale TLS will fail" && exit 1)
 
 COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
