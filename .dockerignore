@@ -33,3 +33,9 @@ yarn-error.log*
 
 Dockerfile*
 docker-compose*
+
+# Non-runtime reference/data kits — verified zero references from
+# app/, config/, routes/, composer.json, docker/ and Dockerfile.
+# COPY . . must not carry them into the production image.
+PARISSA_AI_Image_Memory_Training_Kit_v1/
+pixury-ai-influencer-engine/
